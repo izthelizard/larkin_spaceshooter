@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
 
     private void PlayerMovement() 
     {
+        
         //velocity = Vector3.zero;
 
         if (Input.GetKey(KeyCode.UpArrow))
