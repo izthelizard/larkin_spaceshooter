@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     public Transform bombsTransform;
     public float targetSpeed = 3f;
     public float timeToReachTargetSpeed = 2f;
+    public float maxRadarDistance;
+    
 
     private Vector3 velocity = Vector3.zero;
     private float acceleration;
@@ -37,11 +39,11 @@ public class Player : MonoBehaviour
 
         Debug.Log("Index of the cat is: " + words.IndexOf("Cat"));
 
-        for(int i = 0; i < words.Count; i++)
+        for (int i = 0; i < words.Count; i++)
         {
             Debug.Log(words[i]);
         }
-        foreach(string word in words)
+        foreach (string word in words)
         {
             Debug.Log(word);
         }
@@ -51,19 +53,21 @@ public class Player : MonoBehaviour
     {
         // transform.position = transform.position + Vector3.right * 0.001f;
         PlayerMovement();
-       
+
+        DetectAsteroids(maxRadarDistance, asteroidTransforms);
+
     }
 
-    private void PlayerMovement() 
+    private void PlayerMovement()
     {
-        
+
         //velocity = Vector3.zero;
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
             //transform.position += Vector3.up * speed * Time.deltaTime;
             velocity += Vector3.up * acceleration * Time.deltaTime;
-            
+
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
@@ -77,7 +81,7 @@ public class Player : MonoBehaviour
         {
             velocity += Vector3.right * acceleration * Time.deltaTime;
         }
-        
+
         //compare the size of the vector to max speed
 
         //if over it
@@ -91,5 +95,21 @@ public class Player : MonoBehaviour
         transform.position += velocity * Time.deltaTime;
     }
 
+    public void DetectAsteroids(float inMaxRange, List<Transform> inAsteroids)
+    {
+        foreach (Transform asteroid in inAsteroids)
+        {
+            //Figuring out what the distance is to the asteroid
+            float distance = Vector3.Distance(asteroid.position, transform.position);
 
+            if (distance <= inMaxRange)
+            {
+                //We are going to draw a line
+                Vector3 startPosition = transform.position;
+                Vector3 endPosition = (asteroid.position - transform.position).normalized * 2.5f + transform.position;
+                Debug.DrawLine(startPosition, endPosition, Color.green);
+            }
+
+        }
+    }
 }
