@@ -4,17 +4,19 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
     public List<Transform> asteroidTransforms;
     public Transform enemyTransform;
     public GameObject bombPrefab;
+    public GameObject powerupPrefab;
     public Transform bombsTransform;
     public float targetSpeed = 3f;
     public float timeToReachTargetSpeed = 2f;
     public float maxRadarDistance;
-    
+
 
     private Vector3 velocity = Vector3.zero;
     private float acceleration;
@@ -23,36 +25,37 @@ public class Player : MonoBehaviour
     {
         acceleration = targetSpeed / timeToReachTargetSpeed;
 
-        List<string> words = new List<string>();
-        words.Add("Dog");
+        // List<string> words = new List<string>();
+        //words.Add("Dog");
         //Dog[0]
-        words.Add("Cat");
+        //words.Add("Cat");
         //Dog[0],Cat[1]
-        words.Add("Log");
+        // words.Add("Log");
         //Dog[0],Cat[1],Log[2]
 
-        words.Insert(1, "Rat");
+        // words.Insert(1, "Rat");
         //Dog[0],Rat[1],Cat[2],Log[3]
 
-        words.Remove("Dog");
+        // words.Remove("Dog");
         //Rat[0],Cat[1],Log[2]
 
-        Debug.Log("Index of the cat is: " + words.IndexOf("Cat"));
+        // Debug.Log("Index of the cat is: " + words.IndexOf("Cat"));
 
-        for (int i = 0; i < words.Count; i++)
-        {
-            Debug.Log(words[i]);
-        }
-        foreach (string word in words)
-        {
-            Debug.Log(word);
-        }
+        // for (int i = 0; i < words.Count; i++)
+        // {
+        //     Debug.Log(words[i]);
+        // }
+        // foreach (string word in words)
+        // {
+        //    Debug.Log(word);
+        // }
     }
-
     void Update()
     {
         // transform.position = transform.position + Vector3.right * 0.001f;
         PlayerMovement();
+
+        // EnemyRadar();
 
         DetectAsteroids(maxRadarDistance, asteroidTransforms);
 
@@ -111,5 +114,33 @@ public class Player : MonoBehaviour
             }
 
         }
+    }
+
+    //public void EnemyRadar(float radius, int circlePoints)
+    //{
+    //radius = 5;
+    //circlePoints = new circlePoints(Mathf.Cos(10 * Mathf.Deg2Rad), Mathf.Sin(10 * Mathf.Deg2Rad)) * radius;
+
+
+    // Debug.DrawLine(startingPosition, endingPosition, Color.green);
+
+
+
+    //if (Enemy => radius)
+    //{
+    //    Debug.DrawLine(startingPosition, endingPosition, Color.red);
+    //}
+
+    //}
+
+    public void SpawnPowerups(float radius, int numberOfPowerups)
+    {
+        float angle = (Mathf.Deg2Rad * (360 / 5));
+        float x = Mathf.Cos(angle);
+        float y = Mathf.Sin(angle);
+
+        // get clarification later
+        //numberOfPowerups = (x, y) * radius;
+
     }
 }
