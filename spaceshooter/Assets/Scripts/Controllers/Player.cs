@@ -1,4 +1,5 @@
 ﻿using Codice.Client.BaseCommands.CheckIn.Progress;
+using Codice.CM.Common;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,11 +13,14 @@ public class Player : MonoBehaviour
     public Transform enemyTransform;
     public GameObject bombPrefab;
     public GameObject powerupPrefab;
+    public GameObject missilePrefab;
     public Transform bombsTransform;
     public float targetSpeed = 3f;
     public float timeToReachTargetSpeed = 2f;
     public float maxRadarDistance;
 
+    public float missileSpeed = 5f;
+    public float missileLife = 2f;
 
     private Vector3 velocity = Vector3.zero;
     private float acceleration;
@@ -26,6 +30,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         acceleration = targetSpeed / timeToReachTargetSpeed;
+
+       
 
         // List<string> words = new List<string>();
         //words.Add("Dog");
@@ -59,14 +65,15 @@ public class Player : MonoBehaviour
         // transform.position = transform.position + Vector3.right * 0.001f;
         PlayerMovement();
 
+       
+
         // EnemyRadar();
 
         DetectAsteroids(maxRadarDistance, asteroidTransforms);
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Debug.DrawLine(origin, ePost, Color.green, 2f);
-            Debug.Log("Laser");
+            FireMissile();
         }
     }
 
@@ -123,6 +130,11 @@ public class Player : MonoBehaviour
             }
 
         }
+    }
+
+    public void FireMissile()
+    {
+        transform.position += Vector3.up * missileSpeed * Time.deltaTime;
     }
 
     //public void EnemyRadar(float radius, int circlePoints)
