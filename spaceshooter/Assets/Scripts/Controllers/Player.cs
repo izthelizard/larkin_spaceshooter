@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private float acceleration;
 
+    public float lineLength = 10f;
+
     void Start()
     {
         acceleration = targetSpeed / timeToReachTargetSpeed;
@@ -52,6 +54,8 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        Vector3 origin = transform.position;
+        Vector3 ePost = origin + transform.forward * lineLength; 
         // transform.position = transform.position + Vector3.right * 0.001f;
         PlayerMovement();
 
@@ -59,6 +63,11 @@ public class Player : MonoBehaviour
 
         DetectAsteroids(maxRadarDistance, asteroidTransforms);
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Debug.DrawLine(origin, ePost, Color.green, 2f);
+            Debug.Log("Laser");
+        }
     }
 
     private void PlayerMovement()
